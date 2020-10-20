@@ -256,6 +256,15 @@ class ARM(Platform):
     _boot_stage1_missing_error = N_("You must include at least one MBR-formatted "
                                     "disk as an install target.")
 
+class Aarch64(Platform):
+    _boot_stage1_device_types = ["disk"]
+    _boot_mbr_description = N_("Master Boot Record")
+    _boot_descriptions = {"disk": _boot_mbr_description,
+                          "partition": Platform._boot_partition_description}
+
+    _boot_stage1_missing_error = N_("You must include at least one MBR-formatted "
+                                    "disk as an install target.")
+
 
 def get_platform():
     """Check the architecture of the system and return an instance of a
@@ -287,6 +296,8 @@ def get_platform():
         return X86()
     elif arch.is_arm():
         return ARM()
+    elif arch.is_aarch64():
+        return Aarch64()
     else:
         raise SystemError("Could not determine system architecture.")
 
